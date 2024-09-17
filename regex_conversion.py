@@ -142,7 +142,7 @@ def save_postfix_to_json(postfix, filename):
         json.dump(data, file, indent=4)
 
 # Solicitar al usuario que ingrese una expresión regular
-regex = input("Ingresa una expresión regular (usa '_' para ε): ")
+regex = input("Ingresa una expresión regular: ")
 
 # Insertar operadores de concatenación explícitos
 regex = insert_concatenation_operators(regex)
