@@ -3,6 +3,7 @@ import time  # Import time module for timing the simulation
 from regex_conversion import shunting_yard, insert_concatenation_operators, thompson_construction, generate_adjacency_matrix, print_adjacency_matrix
 from Construccion_Subconjuntos import subset_construction
 from Minimization import minimize_dfa, save_minimized_dfa_to_json
+from graphviz import Digraph  # Importar la biblioteca graphviz para dibujar el diagrama
 
 def simulate_dfa(dfa, input_string):
     current_state = dfa['start']
@@ -91,3 +92,25 @@ if transitions:
         print(transition)
 else:
     print("No se realizaron transiciones.")
+
+# Paso 7: Dibujar el diagrama del AFD minimizado
+def draw_minimized_dfa(dfa):
+    dot = Digraph()
+
+    # Agregar estados al diagrama
+    for state in dfa["states"]:
+        if state in dfa["accept"]:
+            dot.node(state, state, shape='doublecircle')  # Estados de aceptación
+        else:
+            dot.node(state, state)  # Estados normales
+
+    # Agregar transiciones al diagrama
+    for state, transitions in dfa["transitions"].items():
+        for symbol, target_state in transitions.items():
+            dot.edge(state, target_state, label=symbol)
+
+    dot.render('minimized_dfa', format='png', cleanup=True)  # Guardar el diagrama como imagen PNG
+    print("Diagrama del AFD minimizado guardado como 'minimized_dfa.png'.")
+
+# Llamar a la función para dibujar el diagrama después de minimizar el AFD
+draw_minimized_dfa(minimized_dfa)
